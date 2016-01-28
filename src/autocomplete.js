@@ -336,8 +336,8 @@ angular.module('google.places', [])
 
     .directive('gPlacesAutocompleteDrawer', ['$window', '$document', function ($window, $document) {
         var TEMPLATE = [
-            '<div class="pac-container" ng-if="isOpen()" ng-style="{top: position.top+\'px\', left: position.left+\'px\', width: position.width+\'px\'}" style="display: block;" role="listbox" aria-hidden="{{!isOpen()}}">',
-            '  <div class="pac-item" g-places-autocomplete-prediction index="$index" prediction="prediction" query="query"',
+            '<div class="pac-container needsclick" ng-if="isOpen()" ng-style="{top: position.top+\'px\', left: position.left+\'px\', width: position.width+\'px\'}" style="display: block;" role="listbox" aria-hidden="{{!isOpen()}}">',
+            '  <div class="pac-item needsclick" g-places-autocomplete-prediction index="$index" prediction="prediction" query="query"',
             '       ng-repeat="prediction in predictions track by $index" ng-class="{\'pac-item-selected\': isActive($index) }"',
             '       ng-mouseenter="selectActive($index)" ng-click="selectPrediction($index)" role="option" id="{{prediction.id}}">',
             '  </div>',
@@ -406,10 +406,10 @@ angular.module('google.places', [])
 
     .directive('gPlacesAutocompletePrediction', [function () {
         var TEMPLATE = [
-            '<span class="pac-icon pac-icon-marker"></span>',
-            '<span class="pac-item-query" ng-bind-html="prediction | highlightMatched"></span>',
-            '<span ng-repeat="term in prediction.terms | unmatchedTermsOnly:prediction">{{term.value | trailingComma:!$last}}&nbsp;</span>',
-            '<span class="custom-prediction-label" ng-if="prediction.is_custom">&nbsp;{{prediction.custom_prediction_label}}</span>'
+            '<span class="pac-icon pac-icon-marker needsclick"></span>',
+            '<span class="pac-item-query needsclick" ng-bind-html="prediction | highlightMatched"></span>',
+            '<span class="needsclick" ng-repeat="term in prediction.terms | unmatchedTermsOnly:prediction">{{term.value | trailingComma:!$last}}&nbsp;</span>',
+            '<span class="custom-prediction-label needsclick" ng-if="prediction.is_custom">&nbsp;{{prediction.custom_prediction_label}}</span>'
         ];
 
         return {
@@ -435,7 +435,7 @@ angular.module('google.places', [])
                 unmatchedPortion = prediction.terms[0].value.substr(matched.offset + matched.length);
             }
 
-            return $sce.trustAsHtml('<span class="pac-matched">' + matchedPortion + '</span>' + unmatchedPortion);
+            return $sce.trustAsHtml('<span class="pac-matched needsclick">' + matchedPortion + '</span>' + unmatchedPortion);
         };
     }])
 
